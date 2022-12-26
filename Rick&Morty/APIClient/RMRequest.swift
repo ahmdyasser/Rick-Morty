@@ -11,3 +11,7 @@ import Foundation
 final class RMRequest {
     
 }
+
+enum RMRequestCase {
+
+}
