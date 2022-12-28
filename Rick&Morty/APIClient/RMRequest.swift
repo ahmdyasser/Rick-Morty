@@ -11,9 +11,10 @@ import Foundation
 final class RMRequest {
     /// API constants
     private struct Constants {
-        static let baseURL = "https://rickandmortyapi.com/api"
+        static let baseURL = "rickandmortyapi.com"
     }
     
+    private var urlComponents = URLComponents()
     /// Desired endpoint
     private let endpoint: RMEndpoint
     
@@ -25,25 +26,13 @@ final class RMRequest {
     
     /// Constructed url for the api request in string format
     private var urlString: String {
-        var string = Constants.baseURL
-        string += "/"
-        string += endpoint.rawValue
-        if !pathComponents.isEmpty {
-            string += "/"
-            pathComponents.forEach { string += "\($0)" }
-        }
+        urlComponents.scheme = "https"
+        urlComponents.host = Constants.baseURL
+        urlComponents.path = "/api/\(endpoint.rawValue)/\(pathComponents.joined(separator: "/"))"
+        urlComponents.queryItems = queryParameters
+        guard let url = urlComponents.url?.absoluteString else { fatalError("Invalid URL from url components") }
         
-        if !queryParameters.isEmpty {
-            string += "?"
-            let argumentString = queryParameters.compactMap({
-                guard let value = $0.value else { return nil }
-                return "\($0.name)=\(value)"
-                
-            }).joined(separator: "&")
-            
-            string += argumentString
-        }
-         return string
+        return url
     }
     
     // MARK: - Public

@@ -9,7 +9,7 @@ import Foundation
 
 struct RMResponseInfo: Codable {
     var count: Int
-    var page: Int
+    var pages: Int
     var next: String?
     var prev: String?
 }

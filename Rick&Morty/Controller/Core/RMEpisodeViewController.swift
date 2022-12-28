@@ -12,22 +12,7 @@ final class RMEpisodeViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let url = URL(string: "https://rickandmortyapi.com/api/episode/1")!
-        let task = URLSession.shared.dataTask(with: url) { data, response, error in
-            guard let data = data else { return }
-            print(data)
-            do {
-                let episode = try JSONDecoder().decode(RMEpisode.self, from: data)
-                print(episode.airDate)
-                
-            } catch {
-                print(error.localizedDescription)
-            }
-            
-            
-        }
-        task.resume()
-
+        
         
         view.backgroundColor = .systemBackground
         title = "Episodes"
